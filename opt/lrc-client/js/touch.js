@@ -7,7 +7,7 @@ function startup() {
     el.addEventListener("touchmove", handleMove, false);
     //log("initialized.");
 }
-
+var prevX, prevY;
 var ongoingTouches = new Array;
 
 //New Touch
@@ -27,6 +27,8 @@ function handleStart(evt) {
         ctx.fillStyle = color;
         ctx.fill();
 //        //log("touchstart:" + i + ".");
+		prevX = touches[i].pageX;
+		prevY = touches[i].pageY;
     }
 }
 
@@ -41,12 +43,22 @@ function handleMove(evt) {
         var idx = ongoingTouchIndexById(touches[i].identifier);
 
         if (idx >= 0) {
+            var decX = touches[i].pageX  - prevX;
+            var decY = touches[i].pageY  - prevY;
+			prevX = touches[i].pageX;
+			prevY = touches[i].pageY;
+        	
+        	$.get('http://' + host + ':' + port + '/lrc', {
+        		cmd: "export DISPLAY=:0; xdotool mousemove_relative -- ", 
+        	    xy: "" + decX + " " + decY + "", 
+        	    wh: "" + $("#canvas").width() + " " + $("#canvas").height() + ""
+        	});
+           
             //log("continuing touch " + idx);
             ctx.beginPath();
             //log("ctx.moveTo(" + ongoingTouches[idx].pageX + ", " + ongoingTouches[idx].pageY + ");");
             ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
             //log("ctx.lineTo(" + touches[i].pageX + ", " + touches[i].pageY + ");");
-            $.get('http://' + host + ':' + port + '/lrc', {cmd: "export DISPLAY=:0; xdotool mousemove ", xy: "" + touches[i].pageX + " " + touches[i].pageY + "", wh: "" + $("#canvas").width() + " " + $("#canvas").height() + ""});
             ctx.lineTo(touches[i].pageX, touches[i].pageY);
             ctx.lineWidth = 4;
             ctx.strokeStyle = color;

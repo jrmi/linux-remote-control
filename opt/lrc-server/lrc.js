@@ -24,11 +24,11 @@ app.all("/lrc", function(req, res) {
         var h2 = h1 / wh[1];
 
         //New value of cursor positions with proportion
-        var x = xy[0] * w2;
-        var y = xy[1] * h2;
+        var x = xy[0];
+        var y = xy[1];
 
-        var command = req.query.cmd + x.toFixed() + " " + y.toFixed();
-//        console.log(command);
+        var command = req.query.cmd + x + " " + y;
+        console.log(command);
     }
     exec(command, function(err, stdout, stderr) {
 
