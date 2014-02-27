@@ -28,7 +28,7 @@ app.all("/lrc", function(req, res) {
         var y = xy[1];
 
         var command = req.query.cmd + x + " " + y;
-        console.log(command);
+        //console.log(command);
     }
     exec(command, function(err, stdout, stderr) {
 
