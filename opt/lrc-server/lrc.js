@@ -12,18 +12,7 @@ app.all("/lrc", function(req, res) {
 
         //Get position of cursor
         var xy = req.query.xy.split(" ");
-        //Get width and height of the screen of user
-        var wh = req.query.wh.split(" ");
-
-        //Get width and height of the screen of server
-        var w1 = 1366;//screen.width; //________________________________________
-        var h1 = 768;//screen.height; //________________________________________
-
-        //Get proportion of the screens
-        var w2 = w1 / wh[0];
-        var h2 = h1 / wh[1];
-
-        //New value of cursor positions with proportion
+        
         var x = xy[0];
         var y = xy[1];
 
