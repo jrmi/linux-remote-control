@@ -5,9 +5,10 @@ var express = require("express"),
         child;
 
 app.all("/lrc", function(req, res) {
-
+    var command = "";
+        
     if (typeof req.query.xy === "undefined" && typeof req.query.hw === "undefined") {
-        var command = req.query.cmd;
+        command = req.query.cmd;
     } else {
 
         //Get position of cursor
@@ -16,9 +17,10 @@ app.all("/lrc", function(req, res) {
         var x = xy[0];
         var y = xy[1];
 
-        var command = req.query.cmd + x + " " + y;
-        //console.log(command);
+        command = req.query.cmd + x + " " + y;
     }
+    //console.log(command);
+    
     exec(command, function(err, stdout, stderr) {
 
         res.header("Access-Control-Allow-Origin", "*");
